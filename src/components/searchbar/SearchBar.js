@@ -47,7 +47,7 @@ export const SearchBar = ({setUser}) => {
             <div className="search-bar">
                 <input 
                 type="text" 
-                placeholder="Search" 
+                placeholder="Search name" 
                 value={value}
                 onFocus={(e) => setIsBlur(true)}
                 onChange={(e) => handleChange(e.target.value)} 
