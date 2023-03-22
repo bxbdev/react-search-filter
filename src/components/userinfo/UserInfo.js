@@ -13,7 +13,7 @@ export const UserInfo = ({user}) => {
                 <a href={"mailto:" + email}>{email}</a>
             </div>
             <div>
-                <a href={website}>{website}</a>
+                <a href={"https://" + website} target="_blank" rel="noopener noreferrer">{website}</a>
             </div>
         </div>
     )
