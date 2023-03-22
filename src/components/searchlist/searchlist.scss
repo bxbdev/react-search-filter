@@ -1,26 +1,28 @@
-.search {
-    position: relative;;
-}
-.search-bar {
+/* list */
+.list {
+    opacity: 0;
     background-color: var(--white);
-    padding: 8px 12px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
     border-radius: var(--radius);
-    position: relative;
+    overflow-y: auto;
+    transition: 0.15s linear;
 
-    > input {
-        width: 100%;
-        border: none;
-        outline: none;
-        font-size: 2rem;
+    &.show {
+        opacity: 1;
     }
 
-    .btn.clear {
-        background-color: transparent;
-        position: absolute;
-        right: 5px;
-        top: 15px;
-        font-size: 1.6rem;
-        color: var(--grey);
+    .item {
+        font-size: 2rem;
+        padding: 6px 12px;
+        transition: 0.15s linear;
+
+        &:hover {
+            color: var(--white);
+            font-weight: 600;
+            background-color:rgb(255, 174, 0);
+        }
     }
 }
-

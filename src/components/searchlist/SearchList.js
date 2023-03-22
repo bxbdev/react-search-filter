@@ -1,4 +1,4 @@
-import './searchlist.scss';
+import './SearchList.scss';
 export const SearchList = ({list, setResult, className}) => {
 
     const handleClick = (user) => {

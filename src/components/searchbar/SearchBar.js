@@ -1,3 +1,4 @@
+import "./SearchBar.scss"
 import { useState, useEffect, useCallback } from 'react'
 import { SearchList } from '../searchlist/SearchList'
 
