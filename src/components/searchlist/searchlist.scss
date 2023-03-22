@@ -1,0 +1,26 @@
+.search {
+    position: relative;;
+}
+.search-bar {
+    background-color: var(--white);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    position: relative;
+
+    > input {
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 2rem;
+    }
+
+    .btn.clear {
+        background-color: transparent;
+        position: absolute;
+        right: 5px;
+        top: 15px;
+        font-size: 1.6rem;
+        color: var(--grey);
+    }
+}
+
