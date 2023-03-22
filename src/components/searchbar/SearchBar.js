@@ -1,46 +1,62 @@
 import "./SearchBar.scss"
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { SearchList } from '../searchlist/SearchList'
 
 export const SearchBar = ({setUser}) => {
     const [value, setValue] = useState('')
     const [list, setList] = useState([])
-    const [isBlur, setIsBlur] = useState(true)
+    const [filterList, setFilterList] = useState([])
+    const [isFocus, setIsFocus] = useState(false)
+
+    const inputRef = useRef(null)
 
     const fetchData = useCallback(() => {
         fetch("https://jsonplaceholder.typicode.com/users")
         .then( res => res.json())
         .then( data => {
-            const results = data.filter(
-                user => 
-                value && 
-                user && 
-                user.name && 
-                user.name.toLowerCase().includes(value.toLowerCase()))
-            setList(results)
+            setList(data)
         })
-    }, [value])
+    }, [])
+
+    const filterData = useCallback(() => {
+        const results = list.filter(
+            user => 
+            value && 
+            user && 
+            user.name && 
+            user.name.toLowerCase().includes(value.toLowerCase()))
+        setFilterList(results)
+    }, [value, list])
+    
 
     useEffect(() => {
         fetchData()
-    }, [fetchData, isBlur])
+    }, [fetchData, filterData, isFocus, inputRef])
     
+    const clear = <button className="btn clear" onClick={(e) => handleClear()}>X</button>
 
     const handleChange = (value) => {
         setValue(value)
-        fetchData()
+        filterData()
+        if (value === '') {
+            setFilterList([])
+        }
     }
 
     const handleClear = () => {
+        inputRef.current.value = '';
+        inputRef.current.focus();
         setValue('')
     }
-
-    const clear = <button className="btn clear" onClick={(e) => handleClear()}>X</button>
 
     const handleResult = (user) => {
         setValue(user.name)
         setUser(user)
-        setIsBlur(false)
+        setIsFocus(false)
+    }
+
+    const handleFocus = () => {
+        setIsFocus(true)
     }
 
     return (
@@ -50,12 +66,13 @@ export const SearchBar = ({setUser}) => {
                 type="text" 
                 placeholder="Search name" 
                 value={value}
-                onFocus={(e) => setIsBlur(true)}
+                onFocus={(e) => handleFocus()}
                 onChange={(e) => handleChange(e.target.value)} 
+                ref={inputRef}
                 />
                 { value ? clear : null} 
             </div>
-            <SearchList className={value && isBlur ? "list show" : "list"} list={list} setResult={(e) => handleResult(e)} />
+            <SearchList className={ isFocus ? "list show" : "list"} list={filterList.length > 0 ? filterList : list} result={value} setResult={(e) => handleResult(e)} />
         </div>
         
     )
