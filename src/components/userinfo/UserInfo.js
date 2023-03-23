@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-
+import { useState, useEffect } from 'react'
 export const UserInfo = ({user}) => {
     const {name, email, phone, website} = user
+
     useEffect(() => {
     }, [user])
   
@@ -9,7 +9,8 @@ export const UserInfo = ({user}) => {
         <div className="user-info">
             <h2>{name}</h2>
             {
-                user ?
+                user === 'undefined' ? <div>No user found</div>
+                : user ?
                 (
                     <div className="info">
                         <div>Phone: {phone}</div>

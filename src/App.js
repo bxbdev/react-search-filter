@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { SearchBar } from './components/searchbar/SearchBar';
-import { UserInfo } from './components/userinfo/UserInfo';
-import './App.css';
+import { UserInfo } from './components/userinfo/UserInfo'
+import './App.css'
 
 function App() {
   const [user, setUser] = useState('');
 
   useEffect(() => {
+     if (user === '' || user) console.log(user)
   }, [user])
 
   return (

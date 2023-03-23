@@ -47,14 +47,18 @@ export const SearchBar = ({setUser}) => {
     const handleChange = (v) => {
         setValue(v)
         handleFilter(v)
-        if (v === '') return setFilterList(list)
+        if (v === '') {
+            setFilterList(list)
+            setUser(v)
+        } 
     }
 
     const handleFilter = (value) => {
         // filter original list every time when input value changes
-        const update = list.filter( item => item.name.toLowerCase().indexOf(value) !== -1)
+        const update = list.filter( item => item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
         // update new result to filterList, make sure the new result is not the same as the original one
         setFilterList(update)
+        if (update.length === 0) return setUser('undefined')
     }
 
     // clear input value
@@ -62,6 +66,7 @@ export const SearchBar = ({setUser}) => {
         inputRef.current.value = '';
         inputRef.current.focus();
         setValue('')
+        setUser('')
     }
 
     // send result to parent component
