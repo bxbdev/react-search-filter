@@ -94,7 +94,7 @@ export const SearchBar = ({setUser}) => {
                 />
                 { value ? clear : null} 
             </div>
-            <SearchList className={isFocus ? "list show" : "list"} list={filterList} result={value} setResult={(e) => handleResult(e)} />
+            <SearchList className={isFocus ? "list show" : "list"} list={filterList} searchTerm={value} setResult={(e) => handleResult(e)} />
         </div>
     )
 }

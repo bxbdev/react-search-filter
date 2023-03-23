@@ -30,6 +30,13 @@
         &.active {
             color: var(--white);
             background-color:rgb(255, 174, 0);
+            .highlight {
+                background-color: transparent;
+            }
         }
+    }
+
+    .highlight {
+        background-color: rgb(255, 215, 222);
     }
 }
