@@ -15,32 +15,29 @@ export const SearchBar = ({setUser}) => {
         .then( res => res.json())
         .then( data => {
             setList(data)
+            setFilterList(data)
         })
     }, [])
 
-    const filterData = useCallback(() => {
-        const results = list.filter(
-            user => 
-            value && 
-            user && 
-            user.name && 
-            user.name.toLowerCase().includes(value.toLowerCase()))
-        setFilterList(results)
-    }, [value, list])
     
 
     useEffect(() => {
         fetchData()
-    }, [fetchData, filterData, isFocus, inputRef])
+    }, [fetchData, isFocus, inputRef])
     
     const clear = <button className="btn clear" onClick={(e) => handleClear()}>X</button>
 
-    const handleChange = (value) => {
-        setValue(value)
-        filterData()
-        if (value === '') {
-            setFilterList([])
-        }
+    const handleChange = (v) => {
+        setValue(v)
+        handleFilter(v)
+        if (v === '') return setFilterList(list)
+    }
+
+    const handleFilter = (value) => {
+        // filter original list every time when input value changes
+        const update = list.filter( item => item.name.toLowerCase().indexOf(value) !== -1)
+        // update new result to filterList, make sure the new result is not the same as the original one
+        setFilterList(update)
     }
 
     const handleClear = () => {
@@ -66,13 +63,13 @@ export const SearchBar = ({setUser}) => {
                 type="text" 
                 placeholder="Search name" 
                 value={value}
-                onFocus={(e) => handleFocus()}
-                onChange={(e) => handleChange(e.target.value)} 
+                onFocus={() => handleFocus()}
+                onChange={(e) => handleChange(e.target.value)}
                 ref={inputRef}
                 />
                 { value ? clear : null} 
             </div>
-            <SearchList className={ isFocus ? "list show" : "list"} list={filterList.length > 0 ? filterList : list} result={value} setResult={(e) => handleResult(e)} />
+            <SearchList className={isFocus ? "list show" : "list"} list={filterList} result={value} setResult={(e) => handleResult(e)} />
         </div>
         
     )
