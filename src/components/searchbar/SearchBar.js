@@ -9,6 +9,7 @@ export const SearchBar = ({setUser}) => {
     const [isFocus, setIsFocus] = useState(false)
 
     const inputRef = useRef(null)
+    const searchRef = useRef(null)
 
     const fetchData = useCallback(() => {
         fetch("https://jsonplaceholder.typicode.com/users")
@@ -19,14 +20,30 @@ export const SearchBar = ({setUser}) => {
         })
     }, [])
 
-    
-
     useEffect(() => {
+        // init list
         fetchData()
+
+        // click from document to close list
+        document.addEventListener('mousedown', clickOutside)
+
+        // remove mousedown event handler
+        return () => {
+            document.removeEventListener('mousedown', clickOutside)
+        }
+
     }, [fetchData, isFocus, inputRef])
+
+    // click outside to close list
+    const clickOutside = (e) => {
+        if (searchRef.current && !searchRef.current.contains(e.target)) {
+            setIsFocus(false)
+        }
+    }
     
     const clear = <button className="btn clear" onClick={(e) => handleClear()}>X</button>
 
+    // update value and list when input changes
     const handleChange = (v) => {
         setValue(v)
         handleFilter(v)
@@ -40,24 +57,27 @@ export const SearchBar = ({setUser}) => {
         setFilterList(update)
     }
 
+    // clear input value
     const handleClear = () => {
         inputRef.current.value = '';
         inputRef.current.focus();
         setValue('')
     }
 
+    // send result to parent component
     const handleResult = (user) => {
         setValue(user.name)
         setUser(user)
         setIsFocus(false)
     }
 
+    // show list
     const handleFocus = () => {
         setIsFocus(true)
     }
 
     return (
-        <div className="search">
+        <div className="search" ref={searchRef}>
             <div className="search-bar">
                 <input 
                 type="text" 
@@ -71,6 +91,5 @@ export const SearchBar = ({setUser}) => {
             </div>
             <SearchList className={isFocus ? "list show" : "list"} list={filterList} result={value} setResult={(e) => handleResult(e)} />
         </div>
-        
     )
 }
