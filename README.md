@@ -1,4 +1,4 @@
-# Search filter Component
+# Search Filter Component
 [Check Demo](https://search.seekdecor.online/)
 
 ### Practice by following tutorial on youtube 
