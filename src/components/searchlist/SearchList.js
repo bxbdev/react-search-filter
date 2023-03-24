@@ -1,7 +1,11 @@
 import './SearchList.scss'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export const SearchList = ({list, searchTerm, setResult, className}) => {
+
+    useEffect(() => {
+        
+    }, [list])
 
     const handleClick = (user) => {
         setResult(user)
@@ -23,17 +27,17 @@ export const SearchList = ({list, searchTerm, setResult, className}) => {
         ))
     }
 
-    /* 
-        This one has to use dangerouslySetInnerHTML to implement
-       and there is a bug for unable to select match texts
+    /*
+        This one solution need to use dangerouslySetInnerHTML to implement string to html
     */
-    // const handleHightlight = (name) => {
-    //     const regex = new RegExp(`${searchTerm}`, "gi")
-    //     const result = name.split('').map( str => {
-    //         return str.replace(regex, (match) => `<mark>${match}</mark>`)
-    //     })
-    //     return result.join('')
-    // }
+    const handleHightlight = (name, searchTerm) => {
+        const regex = new RegExp(`${searchTerm}`, "gi")
+        const el = name.replace(
+            regex, 
+            `<b class="highlight">$&</b>`
+        )
+        return el
+    }
 
     return (
     <div className={className}>
@@ -45,7 +49,7 @@ export const SearchList = ({list, searchTerm, setResult, className}) => {
                 onClick={(e) => handleClick(user)}
             >
                 {searchTerm !== ''
-                    ? highlightText(user.name, searchTerm)
+                    ? <div dangerouslySetInnerHTML={{ __html:  handleHightlight(user.name, searchTerm) }}></div>
                     : user.name 
                 }
             </div>

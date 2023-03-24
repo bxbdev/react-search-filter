@@ -63,10 +63,11 @@ export const SearchBar = ({setUser}) => {
 
     // clear input value
     const handleClear = () => {
-        inputRef.current.value = '';
         inputRef.current.focus();
         setValue('')
         setUser('')
+        // have to update filter list back to original list
+        setFilterList(list)
     }
 
     // send result to parent component
