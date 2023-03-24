@@ -40,8 +40,13 @@ export const SearchBar = ({setUser}) => {
             setIsFocus(false)
         }
     }
-    
-    const clear = <button className="btn clear" onClick={(e) => handleClear()}>X</button>
+    const closeIcon =   <span className="icon">
+                            <svg viewBox="0 0 100 100" width="30" height="30">
+                                <line x1="30" y1="30" x2="70" y2="70" />
+                                <line x1="30" y1="70" x2="70" y2="30" />
+                            </svg>
+                        </span>
+    const clear = <button className="btn clear" onClick={(e) => handleClear()}>{closeIcon}</button>
 
     // update value and list when input changes
     const handleChange = (v) => {

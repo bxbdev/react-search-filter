@@ -17,10 +17,24 @@
     .btn.clear {
         background-color: transparent;
         position: absolute;
-        right: 5px;
-        top: 15px;
+        right: 0px;
+        top: 7px;
         font-size: 1.6rem;
         color: var(--grey);
+
+        &:hover {
+            .icon svg line {
+                stroke: var(--red);
+            }
+        }
+
+        .icon {
+            svg line {
+                stroke: var(--grey);
+                stroke-width: 6px;
+                transition: 0.25s linear;
+            }
+        }
     }
 }
 
